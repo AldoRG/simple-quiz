@@ -17,6 +17,7 @@ class CreateQuizzesTable extends Migration
             $table->id();
             $table->string('name')->default('translations');
             $table->unsignedBigInteger('user_id');
+            $table->string('result')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

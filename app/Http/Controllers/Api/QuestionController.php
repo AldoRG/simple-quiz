@@ -22,10 +22,13 @@ class QuestionController extends Controller
         $user = User::find($request->user);
         $quiz = new Quiz(['name' => 'translations']);
         $user->quizzes()->save($quiz);
-        if (count($answers) > 10) {
+        if (count($answers) == 10) {
+            $result = 0;
             foreach ($answers as &$answer) {
                 $question = Question::find($answer['question_id']);
                 $answer['correct'] = $question->answer->id == $answer['answer_id'];
+                if ($answer['correct'])
+                    $result +=1;
                 $user->saveAnswers(
                     $quiz->id,
                     $question->answer->id,
@@ -33,6 +36,7 @@ class QuestionController extends Controller
                     $answer['correct']
                 );
             }
+            $quiz->update(['result' => "{$result}/10"]);
             return response()->json($answers);
         }
         return response()->json('Please fill all questions with their respective answer', 400);
