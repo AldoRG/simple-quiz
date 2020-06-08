@@ -1,6 +1,14 @@
 <template>
     <div>
         <div>
+            <div v-if="failed" class="text-danger">
+                <h4>Errors</h4>
+                <ul>
+                    <li v-for="error in errors">
+                        {{error}}
+                    </li>
+                </ul>
+            </div>
             <div v-for="(question, index) in questions">
                 <label class="control-label">{{ index+1 }}.- {{ question.question_text }}</label>
                 <div class="options" v-for="option in question.options" :key="option.id">
@@ -10,14 +18,15 @@
                             class="custom-control-input"
                             v-on:change="questionChecked(question.id, option.id)"
                             type="radio" :id="'radio' + question.id + '-' + option.id"
-                            :value="option.id">
+                            :value="option.id"
+                            required>
                         <label class="custom-control-label" :for="'radio' + question.id + '-' + option.id">{{ option.answer }}</label>
                     </div>
                 </div>
                 <hr>
             </div>
-            <button class="btn-info" v-if="!answered" @click="sendAnswers">Send Answers</button>
-            <button class="btn-info" v-if="answered" @click="retake">Re Take Quiz</button>
+            <button class="btn btn-primary btn-lg btn-block" v-if="!answered" @click="sendAnswers">Send Answers</button>
+            <a href="/home" class="btn btn-info btn-lg btn-block" v-if="answered" @click="retake">Re Take Quiz</a>
         </div>
     </div>
 </template>
@@ -28,7 +37,7 @@
         name: "QuizComponent",
         data(){
             return {
-                answered: false,
+                answered: false
             }
         },
         props: ['user'],
@@ -40,15 +49,23 @@
                 })
             },
             sendAnswers() {
-                this.$store.dispatch('SEND_ANSWERS', {'user': this.user, 'answers': this.answers});
-                this.answered = true
+                if (this.answers.length == 10) {
+                    this.$store.dispatch('SEND_ANSWERS', {'user': this.user, 'answers': this.answers});
+                    this.answered = true
+                } else {
+                    this.$store.commit('ADD_ERROR', 'Please fill all questions with their respective answer')
+                    this.$store.commit('SET_FAILED', true)
+                }
+            },
+            retake() {
+
             }
         },
         mounted() {
             this.$store.dispatch('GET_QUESTIONS')
         },
         computed: {
-            ...mapGetters(['questions', 'answers'])
+            ...mapGetters(['questions', 'answers', 'failed', 'errors'])
         }
     }
 </script>

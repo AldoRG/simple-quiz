@@ -1,6 +1,8 @@
 let state = {
     questions: [],
     answers: [],
-    answer: null
+    answer: null,
+    errors: [],
+    failed: false
 }
 export default state

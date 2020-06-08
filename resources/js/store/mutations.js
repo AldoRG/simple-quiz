@@ -11,6 +11,12 @@ let mutations = {
             let aindex = state.questions[qindex].options.findIndex(el => el.id == answer.answer_id)
             state.questions[qindex].options[aindex].class = answer.correct == true ? 'correct' : 'incorrect';
         });
+    },
+    ADD_ERROR(state, error) {
+        state.errors.push(error)
+    },
+    SET_FAILED(state, failed) {
+        state.failed = failed
     }
 }
 export default mutations

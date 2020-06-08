@@ -4,6 +4,12 @@ let getters = {
     },
     answers: state => {
         return state.answers
+    },
+    errors: state => {
+        return state.errors
+    },
+    failed: state => {
+        return state.failed
     }
 }
 export default getters

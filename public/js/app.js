@@ -1939,6 +1939,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "QuizComponent",
@@ -1956,17 +1965,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     sendAnswers: function sendAnswers() {
-      this.$store.dispatch('SEND_ANSWERS', {
-        'user': this.user,
-        'answers': this.answers
-      });
-      this.answered = true;
-    }
+      if (this.answers.length == 10) {
+        this.$store.dispatch('SEND_ANSWERS', {
+          'user': this.user,
+          'answers': this.answers
+        });
+        this.answered = true;
+      } else {
+        this.$store.commit('ADD_ERROR', 'Please fill all questions with their respective answer');
+        this.$store.commit('SET_FAILED', true);
+      }
+    },
+    retake: function retake() {}
   },
   mounted: function mounted() {
     this.$store.dispatch('GET_QUESTIONS');
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['questions', 'answers']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['questions', 'answers', 'failed', 'errors']))
 });
 
 /***/ }),
@@ -38163,6 +38178,26 @@ var render = function() {
     _c(
       "div",
       [
+        _vm.failed
+          ? _c("div", { staticClass: "text-danger" }, [
+              _c("h4", [_vm._v("Errors")]),
+              _vm._v(" "),
+              _c(
+                "ul",
+                _vm._l(_vm.errors, function(error) {
+                  return _c("li", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(error) +
+                        "\n                "
+                    )
+                  ])
+                }),
+                0
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _vm._l(_vm.questions, function(question, index) {
           return _c(
             "div",
@@ -38187,7 +38222,8 @@ var render = function() {
                         attrs: {
                           name: "radio" + question.id,
                           type: "radio",
-                          id: "radio" + question.id + "-" + option.id
+                          id: "radio" + question.id + "-" + option.id,
+                          required: ""
                         },
                         domProps: { value: option.id },
                         on: {
@@ -38221,15 +38257,22 @@ var render = function() {
         !_vm.answered
           ? _c(
               "button",
-              { staticClass: "btn-info", on: { click: _vm.sendAnswers } },
+              {
+                staticClass: "btn btn-primary btn-lg btn-block",
+                on: { click: _vm.sendAnswers }
+              },
               [_vm._v("Send Answers")]
             )
           : _vm._e(),
         _vm._v(" "),
         _vm.answered
           ? _c(
-              "button",
-              { staticClass: "btn-info", on: { click: _vm.retake } },
+              "a",
+              {
+                staticClass: "btn btn-info btn-lg btn-block",
+                attrs: { href: "/home" },
+                on: { click: _vm.retake }
+              },
               [_vm._v("Re Take Quiz")]
             )
           : _vm._e()
@@ -51718,7 +51761,9 @@ var actions = {
     axios.post('/api/answers', answers).then(function (response) {
       commit('UPDATE_QUESTIONS', response.data);
     })["catch"](function (error) {
-      console.log(error);
+      console.log(error.response);
+      commit('ADD_ERROR', error.response.data);
+      commit('SET_FAILED', true);
     });
   }
 };
@@ -51741,6 +51786,12 @@ var getters = {
   },
   answers: function answers(state) {
     return state.answers;
+  },
+  errors: function errors(state) {
+    return state.errors;
+  },
+  failed: function failed(state) {
+    return state.failed;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (getters);
@@ -51805,6 +51856,12 @@ var mutations = {
       });
       state.questions[qindex].options[aindex]["class"] = answer.correct == true ? 'correct' : 'incorrect';
     });
+  },
+  ADD_ERROR: function ADD_ERROR(state, error) {
+    state.errors.push(error);
+  },
+  SET_FAILED: function SET_FAILED(state, failed) {
+    state.failed = failed;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (mutations);
@@ -51823,7 +51880,9 @@ __webpack_require__.r(__webpack_exports__);
 var state = {
   questions: [],
   answers: [],
-  answer: null
+  answer: null,
+  errors: [],
+  failed: false
 };
 /* harmony default export */ __webpack_exports__["default"] = (state);
 

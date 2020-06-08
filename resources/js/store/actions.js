@@ -14,7 +14,9 @@ let actions = {
                 commit('UPDATE_QUESTIONS', response.data)
             })
             .catch(error => {
-                console.log(error)
+                console.log(error.response)
+                commit('ADD_ERROR', error.response.data)
+                commit('SET_FAILED', true)
             })
     },
 }
