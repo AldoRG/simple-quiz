@@ -36,7 +36,7 @@ class QuestionController extends Controller
                     $answer['correct']
                 );
             }
-            $quiz->update(['result' => "{$result}/10"]);
+            $quiz->update(['result' => $result]);
             return response()->json($answers);
         }
         return response()->json('Please fill all questions with their respective answer', 400);
