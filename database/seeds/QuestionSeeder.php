@@ -26,7 +26,7 @@ class QuestionSeeder extends Seeder
     {
         foreach (self::WORDS_ANSWER as $question => $answer) {
             $q = Question::create([
-                'question' => 'Traducción de: '.$question
+                'question_text' => "Please translate: \"".$question."\""
             ]);
             $a = new \App\Answer(['answer' => $answer]);
             $q->answer()->save($a);
