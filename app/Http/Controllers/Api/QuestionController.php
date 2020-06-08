@@ -20,7 +20,7 @@ class QuestionController extends Controller
     {
         $answers = $request->get('answers');
         $user = User::find($request->user);
-        $quiz = new Quiz(['name' => 'translations']);
+        $quiz = new Quiz(['name' => 'Translations']);
         $user->quizzes()->save($quiz);
         if (count($answers) == 10) {
             $result = 0;

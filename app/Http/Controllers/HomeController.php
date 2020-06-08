@@ -26,4 +26,10 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function quizzes()
+    {
+        $quizzes = auth()->user()->quizzes()->get();
+        return view('quizzes', ['quizzes' => $quizzes]);
+    }
 }
