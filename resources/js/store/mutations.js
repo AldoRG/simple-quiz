@@ -3,7 +3,12 @@ let mutations = {
         state.questions = questions
     },
     ADD_ANSWER(state, answer) {
-        state.answers.push(answer)
+        let index = state.answers.findIndex(el => el.question_id == answer.question_id)
+        if (state.answers.length != 0 && index != -1) {
+            state.answers.splice(index, 1, answer);
+        } else {
+            state.answers.push(answer)
+        }
     },
     UPDATE_QUESTIONS(state, answers) {
         answers.forEach(function (answer, key) {
@@ -14,6 +19,9 @@ let mutations = {
     },
     ADD_ERROR(state, error) {
         state.errors.push(error)
+    },
+    CLEAR_ERRORS(state) {
+        state.errors = {}
     },
     SET_FAILED(state, failed) {
         state.failed = failed

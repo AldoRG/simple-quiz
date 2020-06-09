@@ -1965,7 +1965,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     sendAnswers: function sendAnswers() {
-      if (this.answers.length == 10) {
+      if (this.answers.length >= 10) {
+        this.$store.commit('SET_FAILED', false);
+        this.$store.commit('CLEAR_ERRORS');
         this.$store.dispatch('SEND_ANSWERS', {
           'user': this.user,
           'answers': this.answers
@@ -51844,7 +51846,15 @@ var mutations = {
     state.questions = questions;
   },
   ADD_ANSWER: function ADD_ANSWER(state, answer) {
-    state.answers.push(answer);
+    var index = state.answers.findIndex(function (el) {
+      return el.question_id == answer.question_id;
+    });
+
+    if (state.answers.length != 0 && index != -1) {
+      state.answers.splice(index, 1, answer);
+    } else {
+      state.answers.push(answer);
+    }
   },
   UPDATE_QUESTIONS: function UPDATE_QUESTIONS(state, answers) {
     answers.forEach(function (answer, key) {
@@ -51859,6 +51869,9 @@ var mutations = {
   },
   ADD_ERROR: function ADD_ERROR(state, error) {
     state.errors.push(error);
+  },
+  CLEAR_ERRORS: function CLEAR_ERRORS(state) {
+    state.errors = {};
   },
   SET_FAILED: function SET_FAILED(state, failed) {
     state.failed = failed;

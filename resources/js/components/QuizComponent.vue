@@ -49,7 +49,9 @@
                 })
             },
             sendAnswers() {
-                if (this.answers.length == 10) {
+                if (this.answers.length >= 10) {
+                    this.$store.commit('SET_FAILED', false)
+                    this.$store.commit('CLEAR_ERRORS')
                     this.$store.dispatch('SEND_ANSWERS', {'user': this.user, 'answers': this.answers});
                     this.answered = true
                 } else {
