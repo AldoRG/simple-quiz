@@ -5,25 +5,25 @@ Simple Quiz is a web application using [Laravel](https://laravel.com), [VueJS](h
 
 ## Screenshots
 Login/Register  
-![Image of To-Do App](https://aldorg.com/simplequiz1.png)
-![Image of To-Do App](https://aldorg.com/simplequiz2.png) 
+![Image of Simple Quiz App](https://aldorg.com/simplequiz1.png#1)
+![Image of Simple Quiz App](https://aldorg.com/simplequiz2.png#1) 
 
 Menu  
-![Image of To-Do App](https://aldorg.com/simplequiz9.png)
+![Image of Simple Quiz App](https://aldorg.com/simplequiz9.png#1)
 
 Quiz  
-![Image of To-Do App](https://aldorg.com/simplequiz3.png)
-![Image of To-Do App](https://aldorg.com/simplequiz4.png)
+![Image of Simple Quiz App](https://aldorg.com/simplequiz3.png#1)
+![Image of Simple Quiz App](https://aldorg.com/simplequiz4.png#1)
 
 Error Validation  
-![Image of To-Do App](https://aldorg.com/simplequiz5.png)
+![Image of Simple Quiz App](https://aldorg.com/simplequiz5.png#1)
 
 Results  
-![Image of To-Do App](https://aldorg.com/simplequiz6.png)
-![Image of To-Do App](https://aldorg.com/simplequiz7.png)
+![Image of Simple Quiz App](https://aldorg.com/simplequiz6.png#1)
+![Image of Simple Quiz App](https://aldorg.com/simplequiz7.png#1)
 
 My Quizzes  
-![Image of To-Do App](https://aldorg.com/simplequiz8.png)
+![Image of Simple Quiz App](https://aldorg.com/simplequiz8.png#1)
 
 ## Installation
 ```

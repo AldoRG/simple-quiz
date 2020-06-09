@@ -6,16 +6,16 @@ use Illuminate\Database\Seeder;
 class QuestionSeeder extends Seeder
 {
     const WORDS_ANSWER = [
-        'el altavoz' => 'loudspeaker',
-        'el alumno/la alumna' => 'pupil',
-        'el bolígrafo' => 'ballpoint pen',
-        'el borrador' => 'board eraser',
-        'el calendario' => 'calendar',
-        'el cartel/el póster' => 'poster',
-        'el cuaderno' => 'notebook, workbook',
-        'el diccionario' => 'dictionary',
-        'el escritorio' => 'desk',
-        'el estudiante/la estudiante' => 'student'
+        'loudspeaker' => 'el altavoz',
+        'pupil' => 'el alumno/la alumna',
+        'ballpoint pen' => 'el bolígrafo',
+        'board eraser' => 'el borrador',
+        'calendar' => 'el calendario',
+        'poster' => 'el cartel/el póster',
+        'notebook, workbook' => 'el cuaderno',
+        'dictionary' => 'el diccionario',
+        'desk' => 'el escritorio',
+        'student' => 'el estudiante/la estudiante'
     ];
     /**
      * Run the database seeds.
